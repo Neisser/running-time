@@ -1,0 +1,6 @@
+Inicio
+Lea s
+s=s+1
+s=s+2
+s=s+1
+Pare
