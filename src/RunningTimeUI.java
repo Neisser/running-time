@@ -52,10 +52,14 @@ public class RunningTimeUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser();
+
             int result = fileChooser.showOpenDialog(RunningTimeUI.this);
+
             if (result == JFileChooser.APPROVE_OPTION) {
                 selectedFile = fileChooser.getSelectedFile();
+
                 resultArea.append("\nSelected File: " + selectedFile.getAbsolutePath() + "\n");
+
                 analyzeButton.setEnabled(true);
             }
         }

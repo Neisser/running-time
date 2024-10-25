@@ -23,5 +23,4 @@ public class Commands {
     public Map<CommandType, Command> getCommandMap() {
         return commandMap;
     }
-
 }
