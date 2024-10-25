@@ -1,38 +1,44 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class RunningTime {
+    public BlockType currentBlock = BlockType.NONE;
 
-    int operations;
+    private String iterations = "";
 
-    String iterations;
+    private boolean isFirstOperation = true;
 
-    Queue codeToProcess;
+    public final Map<CommandType, Command> commandMap = new HashMap<>();
 
-    RunningTime[] children;
-
-    public RunningTime(Queue code) {
-        this.codeToProcess = code;
-
-        this.operations = 0;
-
-        this.iterations = "";
-
-        this.children = null;
+    public String getRunningTime() {
+        return iterations;
     }
 
-    public void getRunningTime() {
-        Boolean endBlock = false;
+    public void setIsFirstOperation() {
+        isFirstOperation = false;
+    }
 
-        while (this.codeToProcess.isEmpty() && !endBlock) {
-            String line = this.codeToProcess.dequeue();
-            if (line.matches("[a-zA-Z]+=.+")) {
+    public void setCommandMap(Map<CommandType, Command> map) {
+        commandMap.putAll(map);
+    }
 
-                if(this.operations == 0){
-                    this.iterations = this.iterations.concat("1");
-                } else {
-                    this.iterations = this.iterations.concat("1 + ");
-                }
+    public void addOperation(String operation) {
 
-                this.operations++;
+        if (currentBlock == BlockType.IF) commandMap.get(CommandType.IF).increaseBlockCount();
+
+        if (currentBlock == BlockType.ELSE) commandMap.get(CommandType.ELSE).increaseBlockCount();
+
+        if(currentBlock != BlockType.IF && currentBlock != BlockType.ELSE) {
+
+            if (!isFirstOperation) {
+                iterations += " + ";
             }
+
+            iterations += operation;
         }
+    }
+
+    public void addIteration(String iteration) {
+        iterations += iteration;
     }
 }
